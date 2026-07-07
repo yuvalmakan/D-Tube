@@ -1,0 +1,27 @@
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 2px 15px;
+  text-decoration: none;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+
+.sidebar-link:hover {
+  background-color: #ededed;
+  border-radius: 10px;
+}
+
+.sidebar-title {
+  color: #272727;
+  font-size: 15px;
+  padding: 15px;
+}
+
+.sidebar-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  margin-right: 12px;
+}

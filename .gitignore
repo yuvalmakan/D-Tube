@@ -1,0 +1,16 @@
+# Node & Dependencies
+node_modules/
+npm-debug.log
+
+# Next.js Frontend
+.next/
+out/
+build/
+
+# Express Backend
+Server/uploads/videos/
+Server/uploads/thumbnails/
+
+# Environment Variables & Secrets
+.env
+

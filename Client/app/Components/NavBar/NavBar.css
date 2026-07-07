@@ -1,0 +1,41 @@
+.navBar {
+  height: 80px;
+  width: 100%;
+  position:fixed; 
+  background-color: white;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e5e5e5; /* Adds a clean line so you can see where it ends */
+  padding: 0 20px; /* Pushes the logo slightly away from the absolute edge */
+  box-sizing: border-box;
+}
+
+.DTube{
+  height: 50px;
+  width: auto;
+  cursor: pointer;
+}
+
+input{
+  border-radius: 100px;
+  position: absolute;
+  left: 35%;
+  height: 40%;
+  width: 30%; 
+  padding: 8px 16px;
+  font-size: 15px;
+}
+
+input:focus {
+  border: 1px solid #3ea6ff; /* A nice highlight blue */
+}
+
+.searchButton{
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  border: 0px solid white;
+  aspect-ratio: 1/1;
+  right: 33%;
+}
