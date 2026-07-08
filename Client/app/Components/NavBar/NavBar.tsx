@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import BaseIcon from "../SideBar/SideBarIcons/BaseIcon";
 import "./NavBar.css";
 import pfp from "../../../public/assets/default_pfp.png";
@@ -24,6 +25,7 @@ function NavBar() {
           strokeWidth={0}
         ></BaseIcon>
       </a>
+
       <form onSubmit={search}>
         <input
           placeholder="Search"
@@ -36,11 +38,12 @@ function NavBar() {
           <BaseIcon iconName="search" strokeWidth={0} color="black" />
         </button>
       </form>
-      <ProfilePic
-        pfp={pfp}
-        style={{ marginLeft: "auto", flexShrink: 0 }}
-        href="/login"
-      />
+
+      <Link href="/create" className="create">
+        Create +
+      </Link>
+
+      <ProfilePic pfp={pfp} style={{ flexShrink: 0 }} href="/login" />
     </div>
   );
 }

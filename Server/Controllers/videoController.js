@@ -38,17 +38,31 @@ const getAllVideos = async (req, res) => {
   }
 };
 
-const uploadVideo = (req, res) => {
+const uploadVideo = async (req, res) => {
     try {
         const { title, description } = req.body;
+        const uploaderId = req.user?.user || req.user?._id;
 
-        const videoFile = req.files['snippet'][0];
-        const thumbnailFile = req.files['thumbnail'][0];
+        const videoFile = req.files['video']?.[0];
+        const thumbnailFile = req.files['thumbnail']?.[0];
+
+        if (!videoFile || !thumbnailFile) {
+            return res.status(400).json({ message: 'Video and thumbnail files are required.' });
+        }
+
+        if (!description) {
+            return res.status(400).json({ message: 'Description is required.' });
+        }
+
+        if (!uploaderId) {
+            return res.status(401).json({ message: 'Uploader information is missing.' });
+        }
 
         const video = new Video({
             title: title,
             description: description,
-            videoUrl: `/${videoFile.path.replace(/\\/g, "/")}`, 
+            uploaderId,
+            videoUrl: `/${videoFile.path.replace(/\\/g, "/")}`,
             thumbnailUrl: `/${thumbnailFile.path.replace(/\\/g, "/")}`
         });
 

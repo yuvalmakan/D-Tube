@@ -22,7 +22,9 @@ export default function Login() {
 
       if (response.ok) {
         console.log("Login Successful!", data);
+        localStorage.setItem("dtube_token", data.token);
         alert("You are now logged in!");
+        window.location.href = "/";
       } else {
         console.error("Login Failed:", data.message);
         alert(`Error: ${data.message}`);

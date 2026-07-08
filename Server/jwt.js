@@ -27,12 +27,12 @@ function verifyToken(token, key){
         return{ valid: false, error: "Malformed token"}
     }
 
-    const [encodedHeader, encodedPayload, providedSigtanure];
-    const unsignedToken = `${encodeHeader}.${encodedPayload}`
+    const [encodedHeader, encodedPayload, providedSignature] = parts;
+    const unsignedToken = `${encodedHeader}.${encodedPayload}`
 
-    const singnature = crypto.createHmac('sha256', key).update(unsignedToken).digest('base64url')
+    const signature = crypto.createHmac('sha256', key).update(unsignedToken).digest('base64url')
 
-    if (singnature != providedSigtanure){
+    if (signature !== providedSignature){
         return { valid: false, error: "Invalid signature" };
     }
  

@@ -7,8 +7,8 @@
   z-index: 100;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #e5e5e5; /* Adds a clean line so you can see where it ends */
-  padding: 0 20px; /* Pushes the logo slightly away from the absolute edge */
+  border-bottom: 1px solid #e5e5e5; 
+  padding: 0 20px;
   box-sizing: border-box;
 }
 
@@ -29,7 +29,7 @@ input{
 }
 
 input:focus {
-  border: 1px solid #3ea6ff; /* A nice highlight blue */
+  border: 1px solid #3ea6ff; 
 }
 
 .searchButton{
@@ -38,4 +38,24 @@ input:focus {
   border: 0px solid white;
   aspect-ratio: 1/1;
   right: 33%;
+}
+
+.create {
+  font-size: 1rem;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 20px; 
+  color: black;
+  text-decoration: none; 
+  font-weight: 500;
+  
+  margin-left: auto; 
+  margin-right: 20px; 
+  
+  transition: background-color 0.2s ease-in-out;
+}
+
+.create:hover {
+  background-color: #f1f1f1; 
 }

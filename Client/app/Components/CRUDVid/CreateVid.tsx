@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 import "./CreateVid.css";
 
 export const CreateVid = () => {
@@ -19,9 +20,9 @@ export const CreateVid = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Video Successfuly uploaded");
+        alert("Video Successfully uploaded");
       } else {
-        alert(`Upload Failed ${data.message}`);
+        alert(`Upload Failed: ${data.message}`);
       }
     } catch (err) {
       alert("Couldn't connect to the server");
@@ -30,12 +31,14 @@ export const CreateVid = () => {
 
   return (
     <div className="inputBox">
-      <form
-        onSubmit={handleSubmit}
-        className="uploadForm"
-        action="/create"
-        method="POST"
-      >
+      <form onSubmit={handleSubmit} className="uploadForm">
+        {/* Navigation Links */}
+        <div className="navLinks">
+          <Link href="/create">Upload</Link>
+          <Link href="/update">Update</Link>
+          <Link href="/delete">Delete</Link>
+        </div>
+
         <h2>Upload Video</h2>
 
         <div className="formGroup">
@@ -54,7 +57,7 @@ export const CreateVid = () => {
           <input
             type="file"
             id="video"
-            name="video"
+            name="snippet"
             accept="video/*"
             required
             className="inFile"
@@ -76,8 +79,8 @@ export const CreateVid = () => {
         <div className="formGroup">
           <label htmlFor="description">Description:</label>
           <textarea
-            id="body"
-            name="body"
+            id="description"
+            name="description"
             rows={5}
             required
             className="inpText"

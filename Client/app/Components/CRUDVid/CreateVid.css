@@ -63,3 +63,23 @@
 .submitBtn:hover {
   background-color: #0056b3;
 }
+
+.navLinks {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.navLinks a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
