@@ -61,9 +61,9 @@ const uploadVideo = async (req, res) => {
         const video = new Video({
             title: title,
             description: description,
-            uploaderId,
-            videoUrl: `/${videoFile.path.replace(/\\/g, "/")}`,
-            thumbnailUrl: `/${thumbnailFile.path.replace(/\\/g, "/")}`
+            uploaderId: uploaderId,
+            videoUrl: `/uploads/videos/${videoFile.filename}`,
+            thumbnailUrl: `/uploads/thumbnails/${thumbnailFile.filename}`
         });
 
         await video.save();

@@ -40,7 +40,6 @@ const login = async (req, res) => {
         }
         const token = generateManualToken({ user: user._id}, KEY)
 
-        // Successful login - return minimal user info (do not send password)
         return res.status(200).json({ message: "Login Successful", token: token})
         } catch (err) {
         console.error(err);

@@ -57,7 +57,7 @@ export const CreateVid = () => {
           <input
             type="file"
             id="video"
-            name="snippet"
+            name="video"
             accept="video/*"
             required
             className="inFile"

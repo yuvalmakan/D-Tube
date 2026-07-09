@@ -5,7 +5,7 @@ import image from "../../../public/assets/github.png";
 import "./VideoCard.css";
 import React, { useState, useEffect } from "react";
 
-function VideoCard() {
+function VideoCardTrending() {
   const [videos, setVideos] = useState<any[]>([]);
 
   const vidArr = async () => {
@@ -18,6 +18,7 @@ function VideoCard() {
       } else {
         const data = await response.json();
         console.log(data);
+        data.sort((a: any, b: any) => b.views - a.views);
         alert("Success");
         setVideos(data);
       }
@@ -52,4 +53,4 @@ function VideoCard() {
   );
 }
 
-export default VideoCard;
+export default VideoCardTrending;
