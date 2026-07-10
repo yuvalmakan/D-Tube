@@ -1,30 +1,47 @@
+const fs = require('fs');
+const path = require('path');
 const Video = require('../models/videos');
 
-const streamVideo = (req, res) => {
-    const range = req.headers.range;
-    if (!range) {
-        res.status(404).send("requires Range Header");
-        return;
-    }     
-    const videoPath = "bigbuck.mp4";
-    const videoSize = fs.statSync("bigbuck.mp4").size;
+const streamVideo = async (req, res) => {
+    try {
+        const id = req.params.id;
+        
+        const videoDoc = await Video.findById(id);
+        
+        if (!videoDoc) {
+            return res.status(404).send("Video not found in database.");
+        }
 
-    const chunkSize = 10 ** 6; // 1MB
-    const start = Number(range.replace(/\D/g, ""));
-    const end = Math.min(start + chunkSize, videoSize - 1);
+        const range = req.headers.range;
+        if (!range) {
+            return res.status(400).send("Requires Range Header");
+        }     
+        
+        const videoPath = path.join(__dirname, '..', videoDoc.videoUrl);
+        
+        const videoSize = fs.statSync(videoPath).size;
 
-    const contentLength = end - start + 1;
-    const headers = {
-        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
-        "Accept-Ranges": "bytes",
-        "Content-Length": contentLength,
-        "Content-Type": "video/mp4"
+        const chunkSize = 10 ** 6;
+        const start = Number(range.replace(/\D/g, ""));
+        const end = Math.min(start + chunkSize, videoSize - 1);
+
+        const contentLength = end - start + 1;
+        const headers = {
+            "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+            "Accept-Ranges": "bytes",
+            "Content-Length": contentLength,
+            "Content-Type": "video/mp4"
+        }
+
+        res.writeHead(206, headers);
+
+        const videoStream = fs.createReadStream(videoPath, { start, end });
+        videoStream.pipe(res);
+        
+    } catch (error) {
+        console.error("Streaming Error:", error);
+        res.status(500).send("Internal Server Error while streaming.");
     }
-
-    res.writeHead(206, headers);
-
-    const videoStream = fs.createReadStream(videoPath, { start, end });
-    videoStream.pipe(res);
 }
 
 const getAllVideos = async (req, res) => {

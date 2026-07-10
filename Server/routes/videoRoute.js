@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router();
 
-const { uploadVideo, getAllVideos } = require('../controllers/videoController');
+const { uploadVideo, getAllVideos, streamVideo } = require('../controllers/videoController');
 
 const auth = require('../middleware/auth')
 const upload = require('../middleware/upload')
@@ -18,6 +18,8 @@ router.post(
 )
 
 router.get('/videos', getAllVideos)
+
+router.get('/play/:id', streamVideo)
 
 
 module.exports = router;

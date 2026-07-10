@@ -39,16 +39,17 @@ function VideoCardTrending() {
           key={vid._id}
           thumbnail={`http://localhost:8000${vid.thumbnailUrl}`}
           creatorPic={image.src}
+          vref="/watch"
         >
           {vid.title}
         </VideoBlock>
       ))}
-      <VideoBlock thumbnail={thumbnail.src} creatorPic={image.src}>
+      {/* <VideoBlock thumbnail={thumbnail.src} creatorPic={image.src}>
         Video where people r stupid
       </VideoBlock>
       <VideoBlock thumbnail={thumbnail.src} creatorPic={image.src}>
         2 Video where people r stupid
-      </VideoBlock>
+      </VideoBlock> */}
     </div>
   );
 }

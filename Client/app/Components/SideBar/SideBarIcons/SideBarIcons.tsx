@@ -2,6 +2,7 @@ import "./SideBarIcons.css";
 import BaseIcon from "./BaseIcon";
 import { ReactNode } from "react";
 import { IconName } from "../../../../public/assets/iconLibrary";
+import Link from "next/link";
 
 interface Prop {
   children: ReactNode;
@@ -9,10 +10,10 @@ interface Prop {
   type: "main icon" | "Subscribed" | "no link";
   imgSrc?: string;
   alt?: string;
+  href: string;
 }
 
-function SideBarIcon({ children, iconName, type, imgSrc, alt }: Prop) {
-  const linkProps = type !== "no link" ? { href: "#" } : {};
+function SideBarIcon({ children, iconName, type, imgSrc, alt, href }: Prop) {
   const image =
     type !== "Subscribed" ? (
       <BaseIcon iconName={iconName} />
@@ -21,10 +22,10 @@ function SideBarIcon({ children, iconName, type, imgSrc, alt }: Prop) {
     );
 
   return (
-    <a {...linkProps} className="sidebar-link">
+    <Link href={href} className="sidebar-link">
       {image}
       <span className="sidebar-title">{children}</span>
-    </a>
+    </Link>
   );
 }
 
