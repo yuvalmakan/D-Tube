@@ -32,7 +32,6 @@ export const CreateVid = () => {
   return (
     <div className="inputBox">
       <form onSubmit={handleSubmit} className="uploadForm">
-        {/* Navigation Links */}
         <div className="navLinks">
           <Link href="/create">Upload</Link>
           <Link href="/update">Update</Link>

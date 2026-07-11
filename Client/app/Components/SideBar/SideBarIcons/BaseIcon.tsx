@@ -2,22 +2,28 @@ import React from "react";
 import { IconPaths, IconName } from "../../../../public/assets/iconLibrary";
 
 interface Prop {
+  className?: string;
   color?: string;
   size?: string | number;
   stroke?: string;
   strokeWidth?: Number;
+  onclick?: () => void;
   iconName: IconName;
 }
 
 function BaseIcon({
   iconName,
+  className,
   color = "none",
   size = 24,
   stroke = "black",
   strokeWidth = 1.5,
+  onclick,
 }: Prop) {
   return (
     <svg
+      className={className}
+      onClick={onclick}
       width={size}
       height={size}
       viewBox="0 0 24 24"
