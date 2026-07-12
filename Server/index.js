@@ -12,6 +12,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const videoRoutes = require('./routes/videoRoute');
 const userRoutes = require('./routes/userRoute');
+const engagementRoutes = require('./routes/engagementRoute');
 
 const PORT = process.env.PORT ?? 8000;
 
@@ -29,3 +30,4 @@ mongoose.connect(dbURI)
 app.use(express.static('Public'));
 app.use('/', videoRoutes);
 app.use('/', userRoutes);
+app.use('/', engagementRoutes);

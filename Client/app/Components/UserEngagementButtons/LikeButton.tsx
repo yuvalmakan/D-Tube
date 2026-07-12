@@ -1,19 +1,71 @@
 import BaseIcon from "../SideBar/SideBarIcons/BaseIcon";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface prop {
   videoID: string;
 }
 
-async function LikeButton({ videoID }: prop) {
+function getStoredToken() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return (
+    window.localStorage.getItem("dtube_token") ||
+    window.localStorage.getItem("token") ||
+    window.sessionStorage.getItem("dtube_token") ||
+    window.sessionStorage.getItem("token") ||
+    null
+  );
+}
+
+function LikeButton({ videoID }: prop) {
   const [liked, setLiked] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function getLike() {
+      try {
+        const token = getStoredToken();
+        if (!token) return;
+
+        const res = await fetch(`http://localhost:8000/liked/${videoID}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+
+        if (!cancelled) {
+          setLiked(Boolean(data?.liked));
+        }
+      } catch (error) {
+        console.error("Failed to fetch like state", error);
+      }
+    }
+
+    getLike();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [videoID]);
 
   async function clicked() {
     try {
-      const token = localStorage.getItem("token");
+      const token = getStoredToken();
+      if (!token) {
+        alert("Please log in first");
+        return;
+      }
 
       const response = await fetch(
-        `http://localhost:8000/toggle-like/${videoID}`,
+        `http://localhost:8000/togglelike/${videoID}`,
         {
           method: "POST",
           headers: {
@@ -26,15 +78,16 @@ async function LikeButton({ videoID }: prop) {
       if (!response.ok) {
         alert("Didn't work");
       } else {
-        alert("Worked");
+        const data = await response.json();
+        setLiked(Boolean(data?.liked));
       }
     } catch {
       alert("Server error");
     }
-    setLiked(!liked);
   }
 
-  const col = liked ? "blue" : "white";
+  const col = liked ? "#2563eb" : "#111827";
+  const stroke = liked ? "#2563eb" : "#111827";
 
   return (
     <BaseIcon
@@ -42,6 +95,7 @@ async function LikeButton({ videoID }: prop) {
       iconName="thumbsUp"
       size={40}
       color={col}
+      stroke={stroke}
       onclick={clicked}
     ></BaseIcon>
   );

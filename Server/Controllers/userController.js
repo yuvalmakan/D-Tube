@@ -38,7 +38,7 @@ const login = async (req, res) => {
         if (!match) {
             return res.status(401).json({ message: "Password Incorrect" });
         }
-        const token = generateManualToken({ user: user._id}, KEY)
+        const token = generateManualToken({ _id: user._id, user: user._id, email: user.email }, KEY)
 
         return res.status(200).json({ message: "Login Successful", token: token})
         } catch (err) {
