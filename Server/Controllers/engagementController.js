@@ -1,6 +1,8 @@
+const mongoose = require('mongoose');
 const Like = require('../models/likeSchema');
 const User = require('../models/users');
 const Video = require('../models/videos');
+const Comment = require('../models/comments');
 
 const toggleLike = async (req, res) => {
     try {
@@ -123,4 +125,54 @@ const subscribed = async (req, res) => {
     }
 };
 
-module.exports = { toggleLike, liked, toggleSub, subscribed };
+const comment = async (req, res) => {
+    try {
+        const currVid = req.params.id;
+        const userID = req.user?._id || req.user?.user;
+
+        if (!userID) {
+            return res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(currVid)) {
+            return res.status(400).json({ success: false, message: 'Invalid video ID' });
+        }
+
+        const video = await Video.findById(currVid);
+        if (!video) {
+            return res.status(404).json({ success: false, message: 'Video not found' });
+        }
+
+        const { comment: commentText } = req.body;
+
+        if (!commentText || typeof commentText !== 'string' || !commentText.trim()) {
+            return res.status(400).json({ success: false, message: 'Comment text is required' });
+        }
+
+        const newComment = new Comment({
+            videoId: currVid,
+            userId: userID,
+            text: commentText.trim()
+        });
+
+        await newComment.save();
+
+        return res.status(200).json({ success: true, message: 'Comment added' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success: false, message: "Couldn't connect to database" });
+    }
+}
+
+const getComments = async (req, res) => {
+  try {
+    const comments = await Comment.find().sort({ createdAt: -1 });
+    res.status(200).json(comments);
+
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    res.status(500).json({ message: "Failed to fetch comments from database" });
+  }
+};
+
+module.exports = { toggleLike, liked, toggleSub, subscribed, comment, getComments };

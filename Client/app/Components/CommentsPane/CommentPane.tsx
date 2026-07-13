@@ -5,37 +5,38 @@ import "./CommentPane.css";
 import CommentInput from "./Comments/CommentInput";
 import Comments from "./Comments/Comments";
 
-const sampleComments = [
-  {
-    id: 1,
-    author: "Maya",
-    time: "2 min ago",
-    text: "This video looks amazing. The editing is so smooth!",
-  },
-  {
-    id: 2,
-    author: "Daniel",
-    time: "10 min ago",
-    text: "I loved the intro and the pacing. Great work!",
-  },
-  {
-    id: 3,
-    author: "Nina",
-    time: "25 min ago",
-    text: "Can’t wait to see more uploads like this.",
-  },
-];
+const CommentPane = ({ videoID }: { videoID: string }) => {
+  async function fetchComments() {
+    try {
+      const res = await fetch(`http://localhost:8000/comments/${videoID}`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch comments");
+      }
+      const data = await res.json();
+      return data.comments;
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+      return [];
+    }
+  }
 
-const CommentPane = () => {
+  type Comment = { text?: string; [key: string]: any };
+
+  const [comments, setComments] = React.useState<Comment[]>([]);
+
+  React.useEffect(() => {
+    fetchComments().then(setComments);
+  }, [videoID]);
+
   return (
     <aside className="commentPane">
       <div className="commentPaneHeader">
         <h3>Comments</h3>
-        <span>{sampleComments.length}</span>
+        <span>{comments.length}</span>
       </div>
 
-      <CommentInput />
-      <Comments comments={sampleComments} />
+      <CommentInput videoID={videoID} />
+      <Comments text={comments[0]?.text ?? ""} />
     </aside>
   );
 };

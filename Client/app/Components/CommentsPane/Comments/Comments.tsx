@@ -1,35 +1,17 @@
 import React from "react";
 import "./Comments.css";
 
-type CommentItem = {
-  id: number;
-  author: string;
-  time: string;
+type CommentsProps = {
   text: string;
 };
 
-type CommentsProps = {
-  comments: CommentItem[];
-};
-
-const Comments = ({ comments }: CommentsProps) => {
+const Comments = ({ text }: CommentsProps) => {
   return (
-    <div className="commentsList">
-      {comments.map((comment) => (
-        <article className="commentCard" key={comment.id}>
-          <div className="commentAvatar">
-            {comment.author.charAt(0).toUpperCase()}
-          </div>
-          <div className="commentBody">
-            <div className="commentMeta">
-              <strong>{comment.author}</strong>
-              <span>{comment.time}</span>
-            </div>
-            <p>{comment.text}</p>
-          </div>
-        </article>
-      ))}
-    </div>
+    <article className="commentCard">
+      <div className="commentBody">
+        <p>{text}</p>
+      </div>
+    </article>
   );
 };
 

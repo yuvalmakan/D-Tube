@@ -23,7 +23,7 @@ export const page = ({ params }: { params: Promise<{ videoID: string }> }) => {
         </div>
       </div>
 
-      <CommentPane />
+      <CommentPane videoID={id} />
     </div>
   );
 };
