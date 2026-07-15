@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const cors = require('cors');
 const app = express();
 
@@ -20,6 +20,7 @@ const dbURI = process.env.MONGODB_URI ?? "mongodb://YuvalMakan:MgzRYSnJjvv2-Fd@a
 mongoose.connect(dbURI)
   .then(() => {
     console.log('Connected to MongoDB');
+    console.log('Loaded SMTP_HOST:', process.env.SMTP_HOST || '<not set>');
     app.listen(PORT, () => console.log('Listening on port:', PORT));
   })
   .catch((err) => {

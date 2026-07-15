@@ -21,6 +21,19 @@ const userSchema = new Schema({
         default: 'default'
     },
     subscribers: [{ type: String, ref: 'User' }],
+    roles: {
+        type: [String],
+        enum: ['user', 'admin'],
+        default: ['user']
+    },
+    passwordResetToken: {
+        type: String,
+        default: null
+    },
+    passwordResetTokenExpiration: {
+        type: Date,
+        default: null
+    }
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

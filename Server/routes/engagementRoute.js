@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { toggleLike, liked, toggleSub, subscribed, comment, getComments } = require('../controllers/engagementController');
 
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 
 router.post('/togglelike/:id', auth, toggleLike);
 
@@ -14,6 +14,6 @@ router.get('/subscribed/:id', auth, subscribed);
 
 router.post('/comment/:id', auth, comment);
 
-router.get('/comments/:id', auth, getComments);
+router.get('/getComments/:id', getComments);
 
 module.exports = router;

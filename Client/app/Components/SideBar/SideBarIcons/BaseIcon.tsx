@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { IconPaths, IconName } from "../../../../public/assets/iconLibrary";
 
 interface Prop {
@@ -9,6 +10,7 @@ interface Prop {
   strokeWidth?: Number;
   onclick?: () => void;
   iconName: IconName;
+  link?: string;
 }
 
 function BaseIcon({
@@ -19,8 +21,9 @@ function BaseIcon({
   stroke = "black",
   strokeWidth = 1.5,
   onclick,
+  link,
 }: Prop) {
-  return (
+  const icon = (
     <svg
       className={className}
       onClick={onclick}
@@ -35,6 +38,8 @@ function BaseIcon({
       <path d={IconPaths[iconName]} />
     </svg>
   );
+
+  return link ? <Link href={link}>{icon}</Link> : icon;
 }
 
 export default BaseIcon;

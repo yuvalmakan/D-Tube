@@ -9,7 +9,6 @@ export const DeleteVid = () => {
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Quick confirmation box so users don't accidentally delete videos
     if (!window.confirm("Are you sure you want to delete this video?")) return;
 
     const token = localStorage.getItem("dtube_token");
@@ -26,7 +25,7 @@ export const DeleteVid = () => {
 
       if (response.ok) {
         alert("Video Successfully deleted");
-        setVideoId(""); // Clear the input box
+        setVideoId("");
       } else {
         alert(`Delete Failed: ${data.message}`);
       }

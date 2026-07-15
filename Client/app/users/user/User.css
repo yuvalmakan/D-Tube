@@ -1,0 +1,14 @@
+.user{
+    border: 2px solid black;
+    display: flex;
+    font-size: 1.75rem;
+    border-radius: 20px;
+}
+.userText{
+    padding-right: 2vw;
+    padding-top: 0.5vh;
+    padding-left: 2vw;
+}
+.userIcon{
+    
+}

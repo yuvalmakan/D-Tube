@@ -1,33 +1,29 @@
 "use client";
 import Link from "next/link";
-import "./auth.css";
+import "../login/auth.css";
 
-export default function Login() {
+export default function ForgotPassword() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const loginData = Object.fromEntries(formData);
+    const email = formData.get("email");
 
     try {
-      const response = await fetch("http://localhost:8000/login", {
+      const response = await fetch("http://localhost:8000/forgot-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(loginData),
+        body: JSON.stringify({ email }),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
-        console.log("Login Successful!", data);
-        localStorage.setItem("dtube_token", data.token);
-        alert("You are now logged in!");
-        window.location.href = "/";
+        alert("If an account exists, a password reset link has been sent!");
+        window.location.href = "/login";
       } else {
-        console.error("Login Failed:", data.message);
-        alert(`Error: ${data.message}`);
+        const data = await response.json().catch(() => ({}));
+        alert(`Error: ${data.message || "Failed to send reset link"}`);
       }
     } catch (error) {
       console.error("Network Error:", error);
@@ -38,7 +34,20 @@ export default function Login() {
   return (
     <div className="auth-container">
       <form onSubmit={handleSubmit} className="auth-form">
-        <h2>Login</h2>
+        <h2>Reset Password</h2>
+
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "13px",
+            color: "#666",
+            marginBottom: "10px",
+          }}
+        >
+          Enter your email address and we'll send you a link to reset your
+          password.
+        </p>
+
         <input
           name="email"
           type="email"
@@ -46,24 +55,13 @@ export default function Login() {
           required
           className="auth-input"
         />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-          className="auth-input"
-        />
 
         <button type="submit" className="auth-btn">
-          Log In
+          Send Link
         </button>
 
-        <Link
-          href="/forgot-password"
-          className="auth-link"
-          style={{ marginTop: "5px" }}
-        >
-          Forgot Password?
+        <Link href="/login" className="auth-link">
+          Back to Login
         </Link>
         <Link href="/signup" className="auth-link">
           Create an account

@@ -4,7 +4,8 @@ const router = express.Router();
 
 const { uploadVideo, getAllVideos, streamVideo } = require('../controllers/videoController');
 
-const auth = require('../middleware/auth')
+const { auth } = require('../middleware/auth')
+const { viewed } = require('../middleware/views');
 const upload = require('../middleware/upload')
 
 router.post(
@@ -19,7 +20,7 @@ router.post(
 
 router.get('/videos', getAllVideos)
 
-router.get('/play/:id', streamVideo)
+router.get('/play/:id', viewed, streamVideo)
 
 
 module.exports = router;

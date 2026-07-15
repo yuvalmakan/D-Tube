@@ -67,8 +67,9 @@ export default function SignUp() {
         <button type="submit" className="auth-btn">
           Sign Up
         </button>
-        <Link href="/login" className="auth-link">
-          Already have an account?
+
+        <Link href="/login" className="auth-link" style={{ marginTop: "5px" }}>
+          Already have an account? Log in
         </Link>
       </form>
     </div>

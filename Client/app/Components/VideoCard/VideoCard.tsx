@@ -43,12 +43,6 @@ function VideoCard() {
           {vid.title}
         </VideoBlock>
       ))}
-      {/* <VideoBlock thumbnail={thumbnail.src} creatorPic={image.src}>
-        Video where people r stupid
-      </VideoBlock>
-      <VideoBlock thumbnail={thumbnail.src} creatorPic={image.src}>
-        2 Video where people r stupid
-      </VideoBlock> */}
     </div>
   );
 }

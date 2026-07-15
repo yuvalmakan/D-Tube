@@ -6,17 +6,7 @@ interface prop {
 }
 
 function getStoredToken() {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  return (
-    window.localStorage.getItem("dtube_token") ||
-    window.localStorage.getItem("token") ||
-    window.sessionStorage.getItem("dtube_token") ||
-    window.sessionStorage.getItem("token") ||
-    null
-  );
+  return window.localStorage.getItem("dtube_token");
 }
 
 function LikeButton({ videoID }: prop) {

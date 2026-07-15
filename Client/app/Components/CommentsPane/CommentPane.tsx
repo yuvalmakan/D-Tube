@@ -8,12 +8,13 @@ import Comments from "./Comments/Comments";
 const CommentPane = ({ videoID }: { videoID: string }) => {
   async function fetchComments() {
     try {
-      const res = await fetch(`http://localhost:8000/comments/${videoID}`);
+      const res = await fetch(`http://localhost:8000/getComments/${videoID}`);
       if (!res.ok) {
         throw new Error("Failed to fetch comments");
       }
       const data = await res.json();
-      return data.comments;
+      console.log("Raw backend data:", data);
+      return data;
     } catch (error) {
       console.error("Error fetching comments:", error);
       return [];
@@ -22,11 +23,17 @@ const CommentPane = ({ videoID }: { videoID: string }) => {
 
   type Comment = { text?: string; [key: string]: any };
 
-  const [comments, setComments] = React.useState<Comment[]>([]);
+  let [comments, setComments] = React.useState<Comment[]>([]);
 
   React.useEffect(() => {
     fetchComments().then(setComments);
   }, [videoID]);
+
+  console.log("Fetched comments:", comments);
+
+  comments = comments.filter((comment) => {
+    comment.videoID == videoID;
+  });
 
   return (
     <aside className="commentPane">
@@ -36,7 +43,13 @@ const CommentPane = ({ videoID }: { videoID: string }) => {
       </div>
 
       <CommentInput videoID={videoID} />
-      <Comments text={comments[0]?.text ?? ""} />
+      {comments.length > 0 ? (
+        comments.map((comment, index) => (
+          <Comments key={index} text={comment.text ?? ""} />
+        ))
+      ) : (
+        <p>No comments yet. Be the first to comment!</p>
+      )}
     </aside>
   );
 };
